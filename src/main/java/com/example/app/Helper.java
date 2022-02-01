@@ -1,7 +1,5 @@
 package com.example.app;
 
-import javafx.application.Platform;
-
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;

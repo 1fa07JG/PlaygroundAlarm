@@ -39,18 +39,8 @@ public class HelloApplication extends Application {
 
     private static void showAlert() {
         String message = "Alarm!!!" + Helper.timeFormatHMS(LocalDateTime.now());
-        ;
-        //AlertApplication alarmAlert=new AlertApplication(message);
-        //alarmAlert.show();
         Alert a = new Alert(Alert.AlertType.INFORMATION, message);
-        Stage dialogsStage = new Stage();
-        Scene scene = new Scene(a.getDialogPane(), 320, 240);
-        dialogsStage.setTitle("Alert");
-        dialogsStage.setScene(scene);
-        dialogsStage.show();
-
-        //a.show();
-
+        a.show();
         System.out.println(message);
     }
 

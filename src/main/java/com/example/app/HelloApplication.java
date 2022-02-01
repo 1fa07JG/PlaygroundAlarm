@@ -1,8 +1,11 @@
 package com.example.app;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -27,12 +30,30 @@ public class HelloApplication extends Application {
     public static TimerTask createAlertTask() {
         return new TimerTask() {
             @Override
-            public void run() {
 
-                System.out.println("Alarm!!!" + Helper.timeFormatHMS(LocalDateTime.now()));
+            public void run() {
+                Platform.runLater(() -> showAlert());
             }
         };
     }
+
+    private static void showAlert() {
+        String message = "Alarm!!!" + Helper.timeFormatHMS(LocalDateTime.now());
+        ;
+        //AlertApplication alarmAlert=new AlertApplication(message);
+        //alarmAlert.show();
+        Alert a = new Alert(Alert.AlertType.INFORMATION, message);
+        Stage dialogsStage = new Stage();
+        Scene scene = new Scene(a.getDialogPane(), 320, 240);
+        dialogsStage.setTitle("Alert");
+        dialogsStage.setScene(scene);
+        dialogsStage.show();
+
+        //a.show();
+
+        System.out.println(message);
+    }
+
 
     public static void main(String[] args) {
 

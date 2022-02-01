@@ -5,7 +5,6 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -32,7 +31,7 @@ public class HelloApplication extends Application {
             @Override
 
             public void run() {
-                Platform.runLater(() -> showAlert());
+                Platform.runLater(HelloApplication::showAlert);
             }
         };
     }
@@ -55,6 +54,6 @@ public class HelloApplication extends Application {
 
         launch();
 
-        // wird erst nach dem Schliessen der GUI erreicht
+        // wird erst nach dem Schließen der GUI erreicht
     }
 }

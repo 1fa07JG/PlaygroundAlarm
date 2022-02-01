@@ -3,6 +3,8 @@ module com.example.playgroundalarm {
     requires javafx.fxml;
 
 
-    opens com.example.playgroundalarm to javafx.fxml;
-    exports com.example.playgroundalarm;
+    opens com.example.app to javafx.fxml;
+    exports com.example.app;
+    exports com.example.playground;
+    opens com.example.playground to javafx.fxml;
 }

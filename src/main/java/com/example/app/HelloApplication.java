@@ -1,4 +1,4 @@
-package com.example.playgroundalarm;
+package com.example.app;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

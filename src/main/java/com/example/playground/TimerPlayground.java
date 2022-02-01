@@ -23,6 +23,7 @@ public class TimerPlayground {
                 System.out.println("See You Later World");
             }
         }, localDateToDate(later));
+        doSomething();
     }
 
     public static void doSomething() {

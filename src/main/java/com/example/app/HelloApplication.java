@@ -15,7 +15,7 @@ import java.util.TimerTask;
 
 public class HelloApplication extends Application {
 
-    public static ArrayList<Integer> delays = new ArrayList(Arrays.asList(5, 10, 15));
+    public static ArrayList<Integer> delays = new ArrayList<>(Arrays.asList(5, 10, 15));
 
     @Override
     public void start(Stage stage) throws IOException {

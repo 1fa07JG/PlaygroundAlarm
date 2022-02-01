@@ -19,8 +19,6 @@ public class Helper {
     }
 
 
-
-
     public static void createTimerAtTime(LocalDateTime alarmTime, TimerTask task) {
         System.out.println("Alarm um " + timeFormatHMS(alarmTime));
         Timer freeze = new Timer();
@@ -40,6 +38,29 @@ public class Helper {
         Instant instant = local.atZone(ZoneId.of("Europe/Berlin")).toInstant();
         return Date.from(instant);
 
+    }
+
+    public static LocalDateTime giveTimeToday(int hour, int minute, int second) {
+        LocalDateTime today = LocalDateTime.now();
+        return LocalDateTime.of(today.getYear(), today.getMonth(), today.getDayOfMonth(), toDAyFormat(hour), toTimeFormat(minute), toTimeFormat(second));
+    }
+
+    public static int toTimeFormat(int timeAmount) {
+        if (timeAmount < 0) {
+            timeAmount = 0;
+        } else if (timeAmount > 59) {
+            timeAmount = 59;
+        }
+        return timeAmount;
+    }
+
+    public static int toDAyFormat(int timeAmount) {
+        if (timeAmount < 0) {
+            timeAmount = 0;
+        } else if (timeAmount > 23) {
+            timeAmount = 23;
+        }
+        return timeAmount;
     }
 
     public static String timeFormatHM(LocalDateTime hora) {

@@ -15,11 +15,7 @@ import java.util.TimerTask;
 
 public class HelloApplication extends Application {
 
-    static LocalDateTime d1=LocalDateTime.of(2022,2,1,13,50, 0);
-    static LocalDateTime d2=LocalDateTime.of(2022,2,1,13,50,10);
-    static LocalDateTime d3=LocalDateTime.of(2022,2,1,13,50,20);
-
-    public static ArrayList<LocalDateTime> delays = new ArrayList<>(Arrays.asList(d1, d2, d3));
+    public static ArrayList<LocalDateTime> delays = new ArrayList<>(Arrays.asList(Helper.giveTimeToday(14, 28, 0), Helper.giveTimeToday(14, 28, -1), Helper.giveTimeToday(14, 28, 70)));
 
 
     @Override

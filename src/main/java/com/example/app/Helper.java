@@ -15,6 +15,13 @@ public class Helper {
 
     public static void createTimerAfterSeconds(int seconds, TimerTask task) {
         LocalDateTime alarmTime = LocalDateTime.now().plusSeconds(seconds);
+        createTimerAtTime(alarmTime, task);
+    }
+
+
+
+
+    public static void createTimerAtTime(LocalDateTime alarmTime, TimerTask task) {
         System.out.println("Alarm um " + timeFormatHMS(alarmTime));
         Timer freeze = new Timer();
         freeze.schedule(task, localDateToDate(alarmTime));

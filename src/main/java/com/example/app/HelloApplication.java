@@ -15,7 +15,12 @@ import java.util.TimerTask;
 
 public class HelloApplication extends Application {
 
-    public static ArrayList<Integer> delays = new ArrayList<>(Arrays.asList(5, 10, 15));
+    static LocalDateTime d1=LocalDateTime.of(2022,2,1,13,50, 0);
+    static LocalDateTime d2=LocalDateTime.of(2022,2,1,13,50,10);
+    static LocalDateTime d3=LocalDateTime.of(2022,2,1,13,50,20);
+
+    public static ArrayList<LocalDateTime> delays = new ArrayList<>(Arrays.asList(d1, d2, d3));
+
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -47,9 +52,9 @@ public class HelloApplication extends Application {
     public static void main(String[] args) {
 
         // hier die Timer setzen
-        for (Integer i : delays) {
-            Helper.createTimerAfterSeconds(i, Helper.createConsoleTask());
-            Helper.createTimerAfterSeconds(i, createAlertTask());
+        for (LocalDateTime d : delays) {
+            Helper.createTimerAtTime(d, Helper.createConsoleTask());
+            Helper.createTimerAtTime(d, createAlertTask());
         }
 
         launch();

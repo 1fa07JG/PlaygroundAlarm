@@ -21,7 +21,7 @@ public class HelloController {
 
     }
 
-    private TimerTask createGuiTask() {
+    public TimerTask createGuiTask() {
         return new TimerTask() {
             @Override
             public void run() {

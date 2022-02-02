@@ -72,10 +72,10 @@ public class HelloApplication extends Application implements Serializable {
         // we are going to read data line by line
         while ((dateString = reader.readNext()) != null) {
             for (String cell : dateString) {
-                System.out.println(cell);
-                String[] cells = cell.split("[-:T]");
+                //System.out.println(cell);
+                String[] cells = cell.split("[-:T.]");
                 int[] dateData = stringArrayToIntArray(cells);
-                LocalDateTime dateCache = LocalDateTime.of(dateData[0], dateData[1], dateData[2], dateData[3], dateData[4], 0);
+                LocalDateTime dateCache = LocalDateTime.of(dateData[0], dateData[1], dateData[2], dateData[3], dateData[4], dateData[4]);
                 dateTimeArrayList.add(dateCache);
             }
         }
@@ -85,17 +85,8 @@ public class HelloApplication extends Application implements Serializable {
     public static int[] stringArrayToIntArray(String[] zahlText) {
         int[] zahl = new int[zahlText.length];
         for (int i = 0; i < zahlText.length; i++) {
-            System.out.println(zahlText[i]);
-            //if (Integer.getInteger(zahlText[i])!=null){
             zahl[i] = Integer.parseInt(zahlText[i]);
-            System.out.println(zahl[i]);
         }
-            /*else {
-                zahl[i]=0;
-            }
-
-        }*/
-
         return zahl;
     }
 
@@ -131,7 +122,9 @@ public class HelloApplication extends Application implements Serializable {
                 LocalDateTime.now().plusSeconds(10),
                 LocalDateTime.now().plusSeconds(15),
                 LocalDateTime.now().plusSeconds(30),
-                Helper.giveTimeToday(16, 20, 0)));
+                Helper.giveTimeToday(16, 20, 0),
+                LocalDateTime.of(1983, 1, 19, 23, 59, 50)
+        ));
 
         /*delays = new ArrayList<>(Arrays.asList(
 
@@ -144,7 +137,7 @@ public class HelloApplication extends Application implements Serializable {
         saveCSV(delays);
 
         for (LocalDateTime d : readCSV("./alarmlistcsv.csv")) {
-            Helper.createTimerAtTime(d, Helper.createConsoleTask());
+            //Helper.createTimerAtTime(d, Helper.createConsoleTask());
             Helper.createTimerAtTime(d, createAlertTask());
             // alternativ wären die Timer mit minuten oder Sekundenangabe zu nutzen
         }

@@ -20,7 +20,7 @@ public class Helper {
 
 
     public static void createTimerAtTime(LocalDateTime alarmTime, TimerTask task) {
-        System.out.println("Alarm um " + timeFormatHMS(alarmTime));
+        System.out.println("createTimerAtTime() Alarm um " + timeFormatHMS(alarmTime));
         Timer freeze = new Timer();
         freeze.schedule(task, localDateToDate(alarmTime));
     }
@@ -29,7 +29,7 @@ public class Helper {
         return new TimerTask() {
             @Override
             public void run() {
-                System.out.println("Alarm!!!" + timeFormatHMS(LocalDateTime.now()));
+                System.out.println("createConsoleTask() Alarm!!!" + timeFormatHMS(LocalDateTime.now()));
             }
         };
     }
@@ -42,7 +42,7 @@ public class Helper {
 
     public static LocalDateTime giveTimeToday(int hour, int minute, int second) {
         LocalDateTime today = LocalDateTime.now();
-        return LocalDateTime.of(today.getYear(), today.getMonth(), today.getDayOfMonth(), toDAyFormat(hour), toTimeFormat(minute), toTimeFormat(second));
+        return LocalDateTime.of(today.getYear(), today.getMonth(), today.getDayOfMonth(), toDayFormat(hour), toTimeFormat(minute), toTimeFormat(second));
     }
 
     public static int toTimeFormat(int timeAmount) {
@@ -54,7 +54,7 @@ public class Helper {
         return timeAmount;
     }
 
-    public static int toDAyFormat(int timeAmount) {
+    public static int toDayFormat(int timeAmount) {
         if (timeAmount < 0) {
             timeAmount = 0;
         } else if (timeAmount > 23) {

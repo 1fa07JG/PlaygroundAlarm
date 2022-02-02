@@ -1,6 +1,7 @@
 module com.example.playgroundalarm {
     requires javafx.controls;
     requires javafx.fxml;
+    requires opencsv;
 
 
     opens com.example.app to javafx.fxml;

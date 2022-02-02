@@ -6,6 +6,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.stage.Stage;
+import com.opencsv.CSVWriter;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,10 +16,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.TimerTask;
 
-public class HelloApplication extends Application {
+public class HelloApplication extends Application implements Serializable {
 
     public static ArrayList<LocalDateTime> delays;
-
+    @Serial
+    public static final long serialVersionUID = 1;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -40,7 +42,22 @@ public class HelloApplication extends Application {
     }
 
     public static void save(ArrayList<LocalDateTime> times) {
-        serializeObject(times, findSavePath("dat", "Week"));
+        serializeObject(times, "./alarmlist.dat");//siehe Speiseplan: findSavePath("dat", "Week")
+    }
+
+    public static void saveCSV(ArrayList<LocalDateTime> times) throws IOException {
+        CSVWriter writer = new CSVWriter(new FileWriter("./alarmlistcsv.csv"));
+        /*ArrayList<String> dateString=new ArrayList<>();
+        for (LocalDateTime l:times) {
+            String s=l.toString();
+            dateString.add(s);
+        }*/
+        String[] dateString = new String[times.size()];
+        for (int i = 0; i < times.size(); i++) {
+            dateString[i] = times.get(i).toString();
+        }
+        writer.writeNext(dateString);
+        writer.flush();
     }
 
     private static void serializeObject(LocalDateTime times, String path) {
@@ -66,7 +83,7 @@ public class HelloApplication extends Application {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
 
         delays = new ArrayList<>(Arrays.asList(
@@ -83,6 +100,9 @@ public class HelloApplication extends Application {
                 Helper.giveTimeToday(15, 40, 70)));*/
 
         // hier die Timer setzen
+        save(delays);
+        saveCSV(delays);
+
         for (LocalDateTime d : delays) {
             Helper.createTimerAtTime(d, Helper.createConsoleTask());
             Helper.createTimerAtTime(d, createAlertTask());

@@ -1,5 +1,6 @@
 package com.example.app;
 
+import com.opencsv.CSVReader;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -8,9 +9,8 @@ import javafx.scene.control.Alert;
 import javafx.stage.Stage;
 import com.opencsv.CSVWriter;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+
+import java.io.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -60,7 +60,47 @@ public class HelloApplication extends Application implements Serializable {
         writer.flush();
     }
 
-    private static void serializeObject(LocalDateTime times, String path) {
+    public static ArrayList<LocalDateTime> readCSV(String link) throws IOException {
+        ArrayList<LocalDateTime> dateTimeArrayList = new ArrayList<>();
+        FileReader filereader = new FileReader(link);
+        CSVReader reader = new CSVReader(filereader);
+        String[] dateString;
+        //String[] sL= (String[]) dateString.toArray();
+        //String[] nextRecord;
+
+
+        // we are going to read data line by line
+        while ((dateString = reader.readNext()) != null) {
+            for (String cell : dateString) {
+                System.out.println(cell);
+                String[] cells = cell.split("[-:T]");
+                int[] dateData = stringArrayToIntArray(cells);
+                LocalDateTime dateCache = LocalDateTime.of(dateData[0], dateData[1], dateData[2], dateData[3], dateData[4], 0);
+                dateTimeArrayList.add(dateCache);
+            }
+        }
+        return dateTimeArrayList;
+    }
+
+    public static int[] stringArrayToIntArray(String[] zahlText) {
+        int[] zahl = new int[zahlText.length];
+        for (int i = 0; i < zahlText.length; i++) {
+            System.out.println(zahlText[i]);
+            //if (Integer.getInteger(zahlText[i])!=null){
+            zahl[i] = Integer.parseInt(zahlText[i]);
+            System.out.println(zahl[i]);
+        }
+            /*else {
+                zahl[i]=0;
+            }
+
+        }*/
+
+        return zahl;
+    }
+
+
+    private static void serializeObject(ArrayList<LocalDateTime> times, String path) {
 
         FileOutputStream fos;
         ObjectOutputStream out;
@@ -103,7 +143,7 @@ public class HelloApplication extends Application implements Serializable {
         save(delays);
         saveCSV(delays);
 
-        for (LocalDateTime d : delays) {
+        for (LocalDateTime d : readCSV("./alarmlistcsv.csv")) {
             Helper.createTimerAtTime(d, Helper.createConsoleTask());
             Helper.createTimerAtTime(d, createAlertTask());
             // alternativ wären die Timer mit minuten oder Sekundenangabe zu nutzen

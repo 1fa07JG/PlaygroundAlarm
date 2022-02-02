@@ -24,6 +24,8 @@ public class TimerPlayground {
             }
         }, localDateToDate(later));
         doSomething();
+        int notehing = 02;
+        System.out.println(notehing);
     }
 
     public static void doSomething() {

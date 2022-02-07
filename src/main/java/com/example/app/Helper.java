@@ -66,7 +66,7 @@ public class Helper {
     }
 
     public static String timeFormatHM(LocalDateTime hora) {
-        return hora.getHour() + ":" + hora.getMinute();
+        return hora.getHour() + ":" + giveOctalView(hora.getMinute());
     }
 
     public static String timeFormatHMS(LocalDateTime hora) {

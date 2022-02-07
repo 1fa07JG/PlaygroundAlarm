@@ -24,11 +24,7 @@ public class HelloApplication extends Application implements Serializable {
     @Serial
     public static final long serialVersionUID = 1;
 
-    @FXML
-    private TextField newHour;
 
-    @FXML
-    private TextField newMinute;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -122,12 +118,7 @@ public class HelloApplication extends Application implements Serializable {
     }
 
 
-    @FXML
-    private void callAddTime() {
-        int hour = Integer.parseInt(newHour.getText());
-        int minute = Integer.parseInt(newMinute.getText());
-        addTime(hour, minute, defaultDateList);
-    }
+
 
     public static void addTime(int hour, int minute, ArrayList<LocalDateTime> times) {
         times.add(Helper.giveTimeToday(hour, minute, 0));
@@ -137,30 +128,7 @@ public class HelloApplication extends Application implements Serializable {
     public static void main(String[] args) throws IOException {
 
 
-        defaultDateList = new ArrayList<>(Arrays.asList(
-
-                LocalDateTime.now().plusSeconds(10),
-                LocalDateTime.now().plusSeconds(15),
-                LocalDateTime.now().plusSeconds(30),
-                Helper.giveTimeToday(16, 20, 0),
-                LocalDateTime.of(1983, 1, 19, 23, 59, 50)
-        ));
-
-        /*openWindow = new ArrayList<>(Arrays.asList(
-
-                Helper.giveTimeToday(8, 45, 00),
-                Helper.giveTimeToday(9, 35, 00),
-                Helper.giveTimeToday(15, 40, 70)));*/
-
-
-        save(defaultDateList);
-        saveCSV(defaultDateList);
-
-        for (LocalDateTime d : readCSV("./alarmlistcsv.csv")) {
-            //Helper.createTimerAtTime(d, Helper.createConsoleTask());
-            Helper.createTimerAtTime(d, createAlertTask());
-            // alternativ wären die Timer mit minuten oder Sekundenangabe zu nutzen
-        }
+        //runTimerDefault();
 
         launch();
 

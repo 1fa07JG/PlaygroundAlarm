@@ -14,16 +14,15 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.TimerTask;
 
-public class HelloApplication extends Application implements Serializable {
+public class TimerApplication extends Application implements Serializable {
     public static ArrayList<LocalDateTime> defaultDateList = new ArrayList<>();
     @Serial
     public static final long serialVersionUID = 1;
 
 
-
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("hello-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(TimerApplication.class.getResource("timer-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
         stage.setTitle("Timer");
         stage.setScene(scene);
@@ -36,7 +35,7 @@ public class HelloApplication extends Application implements Serializable {
             @Override
 
             public void run() {
-                Platform.runLater(HelloApplication::showAlert);
+                Platform.runLater(TimerApplication::showAlert);
             }
         };
     }

@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class HelloController {
+public class TimerController {
     @FXML
     private Label welcomeText;
     @FXML
@@ -27,7 +27,7 @@ public class HelloController {
 
         //erweiterung eine Uhr bauen die jede Sekunde auslöst
 
-        HelloApplication.runTimerDefault();
+        TimerApplication.runTimerDefault();
     }
 
     public TimerTask createGuiTask() {
@@ -44,7 +44,7 @@ public class HelloController {
     private void callAddTime(ActionEvent event) {
         int hour = Integer.parseInt(newHour.getText());
         int minute = Integer.parseInt(newMinute.getText());
-        HelloApplication.addTime(hour, minute, HelloApplication.defaultDateList);
+        TimerApplication.addTime(hour, minute, TimerApplication.defaultDateList);
     }
 
     @FXML

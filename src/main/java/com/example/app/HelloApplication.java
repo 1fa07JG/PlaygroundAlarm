@@ -19,8 +19,7 @@ import java.util.Arrays;
 import java.util.TimerTask;
 
 public class HelloApplication extends Application implements Serializable {
-
-    public static ArrayList<LocalDateTime> defaultDateList;
+    public static ArrayList<LocalDateTime> defaultDateList = new ArrayList<LocalDateTime>();
     @Serial
     public static final long serialVersionUID = 1;
 
@@ -133,5 +132,30 @@ public class HelloApplication extends Application implements Serializable {
         launch();
 
         // wird erst nach dem Schließen der GUI erreicht
+    }
+
+    public static void runTimerDefault() throws IOException {
+
+        defaultDateList.add(LocalDateTime.now().plusSeconds(10));
+        defaultDateList.add(LocalDateTime.now().plusSeconds(15));
+        defaultDateList.add(LocalDateTime.now().plusSeconds(30));
+        defaultDateList.add(Helper.giveTimeToday(16, 20, 0));
+        defaultDateList.add(LocalDateTime.of(1983, 1, 19, 23, 59, 50));
+
+
+
+        /*openWindow = new ArrayList<>(Arrays.asList(
+
+                Helper.giveTimeToday(8, 45, 00),
+                Helper.giveTimeToday(9, 35, 00),
+                Helper.giveTimeToday(15, 40, 70)));*/
+
+
+        saveCSV(defaultDateList);
+
+        for (LocalDateTime d : readCSV("./alarmlistcsv.csv")) {
+            Helper.createTimerAtTime(d, createAlertTask());
+            // alternativ wären die Timer mit minuten oder Sekundenangabe zu nutzen
+        }
     }
 }

@@ -20,9 +20,11 @@ public class Helper {
 
 
     public static void createTimerAtTime(LocalDateTime alarmTime, TimerTask task) {
-        System.out.println("createTimerAtTime() Alarm um " + timeFormatHMS(alarmTime));
-        Timer freeze = new Timer();
-        freeze.schedule(task, localDateToDate(alarmTime));
+        if (alarmTime.isAfter(LocalDateTime.now())) {
+            System.out.println("createTimerAtTime() Alarm um " + timeFormatHMS(alarmTime));
+            Timer freeze = new Timer();
+            freeze.schedule(task, localDateToDate(alarmTime));
+        }
     }
 
     public static TimerTask createConsoleTask() {

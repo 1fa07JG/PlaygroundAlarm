@@ -1,26 +1,25 @@
 package com.example.app;
 
 import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import com.opencsv.CSVWriter;
-
 
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.TimerTask;
 
 public class HelloApplication extends Application implements Serializable {
-
-    public static ArrayList<LocalDateTime> delays;
-    @Serial
+    public static ArrayList<LocalDateTime> defaultDateList = new ArrayList<>();
     public static final long serialVersionUID = 1;
+
+
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -30,6 +29,7 @@ public class HelloApplication extends Application implements Serializable {
         stage.setScene(scene);
         stage.show();
     }
+
 
     public static TimerTask createAlertTask() {
         return new TimerTask() {
@@ -72,10 +72,15 @@ public class HelloApplication extends Application implements Serializable {
         // we are going to read data line by line
         while ((dateString = reader.readNext()) != null) {
             for (String cell : dateString) {
-                //System.out.println(cell);
                 String[] cells = cell.split("[-:T.]");
                 int[] dateData = stringArrayToIntArray(cells);
-                LocalDateTime dateCache = LocalDateTime.of(dateData[0], dateData[1], dateData[2], dateData[3], dateData[4], dateData[4]);
+                LocalDateTime dateCache;
+                if (dateData.length <= 5) {
+                    dateCache = LocalDateTime.of(dateData[0], dateData[1], dateData[2], dateData[3], dateData[4], 0);
+                } else {
+                    dateCache = LocalDateTime.of(dateData[0], dateData[1], dateData[2], dateData[3], dateData[4], dateData[5]);
+                }
+
                 dateTimeArrayList.add(dateCache);
             }
         }
@@ -109,41 +114,49 @@ public class HelloApplication extends Application implements Serializable {
     private static void showAlert() {
         String message = "Alarm!!!" + Helper.timeFormatHMS(LocalDateTime.now());
         Alert a = new Alert(Alert.AlertType.INFORMATION, message);
+        a.initModality(Modality.NONE);
         a.show();
         System.out.println(message);
     }
 
 
-    public static void main(String[] args) throws IOException {
 
 
-        delays = new ArrayList<>(Arrays.asList(
+    public static void addTime(int hour, int minute, ArrayList<LocalDateTime> times) {
+        times.add(Helper.giveTimeToday(hour, minute, 0));
+    }
 
-                LocalDateTime.now().plusSeconds(10),
-                LocalDateTime.now().plusSeconds(15),
-                LocalDateTime.now().plusSeconds(30),
-                Helper.giveTimeToday(16, 20, 0),
-                LocalDateTime.of(1983, 1, 19, 23, 59, 50)
-        ));
 
-        /*delays = new ArrayList<>(Arrays.asList(
+    public static void main(String[] args) {
 
-                Helper.giveTimeToday(15, 40, 50),
-                Helper.giveTimeToday(15, 40, -1),
-                Helper.giveTimeToday(15, 40, 70)));*/
-
-        // hier die Timer setzen
-        save(delays);
-        saveCSV(delays);
-
-        for (LocalDateTime d : readCSV("./alarmlistcsv.csv")) {
-            //Helper.createTimerAtTime(d, Helper.createConsoleTask());
-            Helper.createTimerAtTime(d, createAlertTask());
-            // alternativ wären die Timer mit minuten oder Sekundenangabe zu nutzen
-        }
 
         launch();
 
         // wird erst nach dem Schließen der GUI erreicht
+    }
+
+    public static void runTimerDefault() throws IOException {
+
+        defaultDateList.add(LocalDateTime.now().plusSeconds(10));
+        defaultDateList.add(LocalDateTime.now().plusSeconds(15));
+        defaultDateList.add(LocalDateTime.now().plusSeconds(30));
+        defaultDateList.add(Helper.giveTimeToday(16, 20, 0));
+        defaultDateList.add(LocalDateTime.of(1983, 1, 19, 23, 59, 50));
+
+
+
+        /*openWindow = new ArrayList<>(Arrays.asList(
+
+                Helper.giveTimeToday(8, 45, 00),
+                Helper.giveTimeToday(9, 35, 00),
+                Helper.giveTimeToday(15, 40, 70)));*/
+
+
+        saveCSV(defaultDateList);
+
+        for (LocalDateTime d : readCSV("./alarmlistcsv.csv")) {
+            Helper.createTimerAtTime(d, createAlertTask());
+            // alternativ wären die Timer mit minuten oder Sekundenangabe zu nutzen
+        }
     }
 }

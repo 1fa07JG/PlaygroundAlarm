@@ -20,9 +20,11 @@ public class Helper {
 
 
     public static void createTimerAtTime(LocalDateTime alarmTime, TimerTask task) {
-        System.out.println("createTimerAtTime() Alarm um " + timeFormatHMS(alarmTime));
-        Timer freeze = new Timer();
-        freeze.schedule(task, localDateToDate(alarmTime));
+        if (alarmTime.isAfter(LocalDateTime.now())) {
+            System.out.println("createTimerAtTime() Alarm um " + timeFormatHMS(alarmTime));
+            Timer freeze = new Timer();
+            freeze.schedule(task, localDateToDate(alarmTime));
+        }
     }
 
     public static TimerTask createConsoleTask() {
@@ -64,10 +66,24 @@ public class Helper {
     }
 
     public static String timeFormatHM(LocalDateTime hora) {
-        return hora.getHour() + ":" + hora.getMinute();
+        return hora.getHour() + ":" + formatWithTwoDigits(hora.getMinute());
     }
 
     public static String timeFormatHMS(LocalDateTime hora) {
-        return hora.getHour() + ":" + hora.getMinute() + ":" + hora.getSecond();
+        return hora.getHour() + ":" + formatWithTwoDigits(hora.getMinute()) + ":" + formatWithTwoDigits(hora.getSecond());
+    }
+
+    public static String formatWithTwoDigits(int timeNumber) {
+        String timeText = "" + timeNumber;
+        if (timeText.toCharArray().length == 1) {
+            timeText = "0" + timeNumber;
+        }
+        return timeText;
+    }
+
+    public static void printArray(int[] y) {
+        for (int i = 0; i < y.length; i++) {
+            System.out.println("an der Stelle " + i + " steht:" + y[i]);
+        }
     }
 }

@@ -71,7 +71,6 @@ public class HelloApplication extends Application implements Serializable {
         // we are going to read data line by line
         while ((dateString = reader.readNext()) != null) {
             for (String cell : dateString) {
-                //System.out.println(cell);
                 String[] cells = cell.split("[-:T.]");
                 int[] dateData = stringArrayToIntArray(cells);
                 LocalDateTime dateCache = LocalDateTime.of(dateData[0], dateData[1], dateData[2], dateData[3], dateData[4], dateData[5]);

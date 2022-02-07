@@ -3,9 +3,11 @@ package com.example.app;
 import com.opencsv.CSVReader;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import com.opencsv.CSVWriter;
 
@@ -18,9 +20,15 @@ import java.util.TimerTask;
 
 public class HelloApplication extends Application implements Serializable {
 
-    public static ArrayList<LocalDateTime> delays;
+    public static ArrayList<LocalDateTime> defaultDateList;
     @Serial
     public static final long serialVersionUID = 1;
+
+    @FXML
+    private TextField newHour;
+
+    @FXML
+    private TextField newMinute;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -114,10 +122,22 @@ public class HelloApplication extends Application implements Serializable {
     }
 
 
+    @FXML
+    private void callAddTime() {
+        int hour = Integer.parseInt(newHour.getText());
+        int minute = Integer.parseInt(newMinute.getText());
+        addTime(hour, minute, defaultDateList);
+    }
+
+    public static void addTime(int hour, int minute, ArrayList<LocalDateTime> times) {
+        times.add(Helper.giveTimeToday(hour, minute, 0));
+    }
+
+
     public static void main(String[] args) throws IOException {
 
 
-        delays = new ArrayList<>(Arrays.asList(
+        defaultDateList = new ArrayList<>(Arrays.asList(
 
                 LocalDateTime.now().plusSeconds(10),
                 LocalDateTime.now().plusSeconds(15),
@@ -126,15 +146,15 @@ public class HelloApplication extends Application implements Serializable {
                 LocalDateTime.of(1983, 1, 19, 23, 59, 50)
         ));
 
-        /*delays = new ArrayList<>(Arrays.asList(
+        /*openWindow = new ArrayList<>(Arrays.asList(
 
-                Helper.giveTimeToday(15, 40, 50),
-                Helper.giveTimeToday(15, 40, -1),
+                Helper.giveTimeToday(8, 45, 00),
+                Helper.giveTimeToday(9, 35, 00),
                 Helper.giveTimeToday(15, 40, 70)));*/
 
-        // hier die Timer setzen
-        save(delays);
-        saveCSV(delays);
+
+        save(defaultDateList);
+        saveCSV(defaultDateList);
 
         for (LocalDateTime d : readCSV("./alarmlistcsv.csv")) {
             //Helper.createTimerAtTime(d, Helper.createConsoleTask());

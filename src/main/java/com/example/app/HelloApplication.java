@@ -73,7 +73,13 @@ public class HelloApplication extends Application implements Serializable {
             for (String cell : dateString) {
                 String[] cells = cell.split("[-:T.]");
                 int[] dateData = stringArrayToIntArray(cells);
-                LocalDateTime dateCache = LocalDateTime.of(dateData[0], dateData[1], dateData[2], dateData[3], dateData[4], dateData[5]);
+                LocalDateTime dateCache;
+                if (dateData.length <= 5) {
+                    dateCache = LocalDateTime.of(dateData[0], dateData[1], dateData[2], dateData[3], dateData[4], 0);
+                } else {
+                    dateCache = LocalDateTime.of(dateData[0], dateData[1], dateData[2], dateData[3], dateData[4], dateData[5]);
+                }
+
                 dateTimeArrayList.add(dateCache);
             }
         }

@@ -18,6 +18,8 @@ public class HelloController {
 
     @FXML
     private TextField newMinute;
+    @FXML
+    private Label clock;
 
     @FXML
     protected void onHelloButtonClick() throws IOException {
@@ -42,6 +44,14 @@ public class HelloController {
         int hour = Integer.parseInt(newHour.getText());
         int minute = Integer.parseInt(newMinute.getText());
         HelloApplication.addTime(hour, minute, HelloApplication.defaultDateList);
+    }
+
+    @FXML
+    private void runClock() throws InterruptedException {
+        while (true) {
+            clock.setText(Helper.timeFormatHMS(LocalDateTime.now()));
+            Thread.sleep(500);
+        }
     }
 
 

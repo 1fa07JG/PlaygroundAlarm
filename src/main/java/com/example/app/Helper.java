@@ -70,7 +70,15 @@ public class Helper {
     }
 
     public static String timeFormatHMS(LocalDateTime hora) {
-        return hora.getHour() + ":" + hora.getMinute() + ":" + hora.getSecond();
+        return hora.getHour() + ":" + giveOctalView(hora.getMinute()) + ":" + giveOctalView(hora.getSecond());
+    }
+
+    public static String giveOctalView(int timeNumber) {
+        String timeText = "" + timeNumber;
+        if (timeText.toCharArray().length == 1) {
+            timeText = "0" + timeNumber;
+        }
+        return timeText;
     }
 
     public static void printArray(int[] y) {

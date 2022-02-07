@@ -24,15 +24,15 @@ public class TimerPlayground {
             }
         }, localDateToDate(later));
         doSomething();
-        int notehing = 02;
-        System.out.println(notehing);
+        int nothing = 2;
+        System.out.println(nothing);
     }
 
     public static void doSomething() {
         System.out.println("jetzt " + Helper.timeFormatHMS(LocalDateTime.now()));
         Helper.createTimerAfterSeconds(20, Helper.createConsoleTask());
-        Helper.createTimerAfterMinutes(1,Helper.createConsoleTask());
-        System.out.println("später"+Helper.timeFormatHM(LocalDateTime.now()));
+        Helper.createTimerAfterMinutes(1, Helper.createConsoleTask());
+        System.out.println("später" + Helper.timeFormatHM(LocalDateTime.now()));
     }
 
     public static Date localDateToDate(LocalDateTime local) {

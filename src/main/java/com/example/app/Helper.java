@@ -66,14 +66,14 @@ public class Helper {
     }
 
     public static String timeFormatHM(LocalDateTime hora) {
-        return hora.getHour() + ":" + giveOctalView(hora.getMinute());
+        return hora.getHour() + ":" + formatWithTwoDigits(hora.getMinute());
     }
 
     public static String timeFormatHMS(LocalDateTime hora) {
-        return hora.getHour() + ":" + giveOctalView(hora.getMinute()) + ":" + giveOctalView(hora.getSecond());
+        return hora.getHour() + ":" + formatWithTwoDigits(hora.getMinute()) + ":" + formatWithTwoDigits(hora.getSecond());
     }
 
-    public static String giveOctalView(int timeNumber) {
+    public static String formatWithTwoDigits(int timeNumber) {
         String timeText = "" + timeNumber;
         if (timeText.toCharArray().length == 1) {
             timeText = "0" + timeNumber;

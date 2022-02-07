@@ -30,6 +30,7 @@ public class HelloApplication extends Application implements Serializable {
         stage.show();
     }
 
+
     public static TimerTask createAlertTask() {
         return new TimerTask() {
             @Override
@@ -127,8 +128,6 @@ public class HelloApplication extends Application implements Serializable {
 
     public static void main(String[] args) {
 
-
-        //runTimerDefault();
 
         launch();
 

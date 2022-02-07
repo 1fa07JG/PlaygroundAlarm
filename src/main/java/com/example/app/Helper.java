@@ -72,4 +72,10 @@ public class Helper {
     public static String timeFormatHMS(LocalDateTime hora) {
         return hora.getHour() + ":" + hora.getMinute() + ":" + hora.getSecond();
     }
+
+    public static void printArray(int[] y) {
+        for (int i = 0; i < y.length; i++) {
+            System.out.println("an der Stelle " + i + " steht:" + y[i]);
+        }
+    }
 }

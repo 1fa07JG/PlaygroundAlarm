@@ -9,20 +9,18 @@
 <?import javafx.scene.text.Font?>
 
 <VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.example.app.HelloController">
+      fx:controller="com.example.app.TimerController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0"/>
     </padding>
     <HBox prefHeight="100.0" prefWidth="200.0">
-        <children>
-            <TextField fx:id="newHour" promptText="Stunde"/>
-            <TextField fx:id="newMinute" promptText="Minute"/>
-            <Button mnemonicParsing="false" onAction="#callAddTime" text="+">
-                <font>
-                    <Font name="Arial" size="13.0"/>
-                </font>
-            </Button>
-        </children>
+        <TextField fx:id="newHour" promptText="Stunde"/>
+        <TextField fx:id="newMinute" promptText="Minute"/>
+        <Button mnemonicParsing="false" onAction="#callAddTime" text="+">
+            <font>
+                <Font name="Arial" size="13.0"/>
+            </font>
+        </Button>
     </HBox>
 
     <Label fx:id="welcomeText"/>

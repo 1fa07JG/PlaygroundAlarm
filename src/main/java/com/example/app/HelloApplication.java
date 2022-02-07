@@ -74,7 +74,7 @@ public class HelloApplication extends Application implements Serializable {
                 //System.out.println(cell);
                 String[] cells = cell.split("[-:T.]");
                 int[] dateData = stringArrayToIntArray(cells);
-                LocalDateTime dateCache = LocalDateTime.of(dateData[0], dateData[1], dateData[2], dateData[3], dateData[4], dateData[4]);
+                LocalDateTime dateCache = LocalDateTime.of(dateData[0], dateData[1], dateData[2], dateData[3], dateData[4], dateData[5]);
                 dateTimeArrayList.add(dateCache);
             }
         }

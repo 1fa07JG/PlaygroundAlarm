@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.*;
@@ -16,7 +17,6 @@ import java.util.TimerTask;
 
 public class HelloApplication extends Application implements Serializable {
     public static ArrayList<LocalDateTime> defaultDateList = new ArrayList<>();
-    @Serial
     public static final long serialVersionUID = 1;
 
 
@@ -114,6 +114,7 @@ public class HelloApplication extends Application implements Serializable {
     private static void showAlert() {
         String message = "Alarm!!!" + Helper.timeFormatHMS(LocalDateTime.now());
         Alert a = new Alert(Alert.AlertType.INFORMATION, message);
+        a.initModality(Modality.NONE);
         a.show();
         System.out.println(message);
     }

@@ -1,25 +1,21 @@
 package com.example.app;
 
 import com.opencsv.CSVReader;
+import com.opencsv.CSVWriter;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import com.opencsv.CSVWriter;
-
 
 import java.io.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.TimerTask;
 
 public class HelloApplication extends Application implements Serializable {
-    public static ArrayList<LocalDateTime> defaultDateList = new ArrayList<LocalDateTime>();
+    public static ArrayList<LocalDateTime> defaultDateList = new ArrayList<>();
     @Serial
     public static final long serialVersionUID = 1;
 
@@ -124,7 +120,7 @@ public class HelloApplication extends Application implements Serializable {
     }
 
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
 
         //runTimerDefault();

@@ -128,7 +128,6 @@ public class HelloApplication extends Application implements Serializable {
 
     public static void main(String[] args) {
 
-
         launch();
 
         // wird erst nach dem Schließen der GUI erreicht

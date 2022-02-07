@@ -8,6 +8,7 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Timer;
 import java.util.TimerTask;
 
 public class HelloController {
@@ -49,9 +50,26 @@ public class HelloController {
     @FXML
     private void runClock() throws InterruptedException {
         while (true) {
-            clock.setText(Helper.timeFormatHMS(LocalDateTime.now()));
-            Thread.sleep(500);
+            writeClockText();
+            //Thread.sleep(500);
+            Timer check = new Timer();
+            check.schedule(createClockTask(), Helper.localDateToDate(LocalDateTime.now().plusNanos(1000)));
         }
+    }
+
+    public Runnable writeClockText() {
+        clock.setText(Helper.timeFormatHMS(LocalDateTime.now()));
+        return null;
+    }
+
+    public TimerTask createClockTask() {
+        return new TimerTask() {
+            @Override
+
+            public void run() {
+                Platform.runLater(writeClockText());
+            }
+        };
     }
 
 

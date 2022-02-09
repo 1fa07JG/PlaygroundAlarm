@@ -5,16 +5,18 @@ import com.example.app.Helper;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 
 public class TimerPlayground {
 
     public static void main(String[] args) {
         LocalDateTime later = LocalDateTime.now().plusSeconds(20);
-        //int delay =15000;
+        ArrayList<LocalDateTime> openWindow = new ArrayList<>(Arrays.asList(
+
+                Helper.giveTimeToday(8, 45, 0),
+                Helper.giveTimeToday(9, 35, 0),
+                Helper.giveTimeToday(15, 40, 70)));
         Timer myTimer = new Timer();
         System.out.println("Hallo World");
         myTimer.schedule(new TimerTask() {
@@ -24,8 +26,12 @@ public class TimerPlayground {
             }
         }, localDateToDate(later));
         doSomething();
-        int notehing = 02;
-        System.out.println(notehing);
+        for (LocalDateTime localDateTime : openWindow) {
+            System.out.println(localDateTime);
+        }
+
+        int nothing = 2;
+        System.out.println(nothing);
     }
 
     public static void doSomething() {

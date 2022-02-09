@@ -39,12 +39,7 @@ public class TimerApplication extends Application implements Serializable {
     }
 
     public static void saveCSV(ArrayList<LocalDateTime> times) throws IOException {
-        CSVWriter writer = new CSVWriter(new FileWriter("./alarmlistcsv.csv"));
-        /*ArrayList<String> dateString=new ArrayList<>();
-        for (LocalDateTime l:times) {
-            String s=l.toString();
-            dateString.add(s);
-        }*/
+        CSVWriter writer = new CSVWriter(new FileWriter("./alarmlistCsv.csv"));
         String[] dateString = new String[times.size()];
         for (int i = 0; i < times.size(); i++) {
             dateString[i] = times.get(i).toString();
@@ -119,16 +114,12 @@ public class TimerApplication extends Application implements Serializable {
 
 
 
-        /*openWindow = new ArrayList<>(Arrays.asList(
 
-                Helper.giveTimeToday(8, 45, 00),
-                Helper.giveTimeToday(9, 35, 00),
-                Helper.giveTimeToday(15, 40, 70)));*/
 
 
         saveCSV(defaultDateList);
 
-        for (LocalDateTime d : readCSV("./alarmlistcsv.csv")) {
+        for (LocalDateTime d : readCSV("./alarmlistCsv.csv")) {
             Helper.createTimerAtTime(d, createAlertTask());
             // alternativ wären die Timer mit minuten oder Sekundenangabe zu nutzen
         }

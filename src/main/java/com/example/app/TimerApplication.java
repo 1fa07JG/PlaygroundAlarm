@@ -55,6 +55,22 @@ public class TimerApplication extends Application implements Serializable {
         writer.flush();
     }
 
+    public static void addToAlarmList(ArrayList<LocalDateTime> list, LocalDateTime alarmTime) {
+        if (!isInArrayList(list, alarmTime)) {
+            list.add(alarmTime);
+        }
+    }
+
+    public static boolean isInArrayList(ArrayList<LocalDateTime> list, LocalDateTime alarmTime) {
+        boolean exists = false;
+        for (LocalDateTime l : list) {
+            if (l.equals(alarmTime)) {
+                exists = true;
+            }
+        }
+        return exists;
+    }
+
     public static ArrayList<LocalDateTime> readCSV(String link) throws IOException {
         ArrayList<LocalDateTime> dateTimeArrayList = new ArrayList<>();
         FileReader filereader = new FileReader(link);
@@ -118,13 +134,15 @@ public class TimerApplication extends Application implements Serializable {
 
 
     public static void addTime(int hour, int minute, ArrayList<LocalDateTime> times) {
-        times.add(Helper.giveTimeToday(hour, minute, 0));
+        //times.add(Helper.giveTimeToday(hour, minute, 0));
+        addToAlarmList(times, Helper.giveTimeToday(hour, minute, 0));
     }
+
 
 
     public static void main(String[] args) {
 
-
+        //defaultDateList.add();
         launch();
 
         // wird erst nach dem Schließen der GUI erreicht
@@ -132,11 +150,12 @@ public class TimerApplication extends Application implements Serializable {
 
     public static void runTimerDefault() throws IOException {
 
-        defaultDateList.add(LocalDateTime.now().plusSeconds(10));
-        defaultDateList.add(LocalDateTime.now().plusSeconds(15));
-        defaultDateList.add(LocalDateTime.now().plusSeconds(30));
-        defaultDateList.add(Helper.giveTimeToday(16, 20, 0));
-        defaultDateList.add(LocalDateTime.of(1983, 1, 19, 23, 59, 50));
+        addToAlarmList(defaultDateList, LocalDateTime.now().plusSeconds(10));
+        addToAlarmList(defaultDateList, LocalDateTime.now().plusSeconds(15));
+        addToAlarmList(defaultDateList, LocalDateTime.now().plusSeconds(30));
+        addToAlarmList(defaultDateList, Helper.giveTimeToday(16, 20, 0));
+        addToAlarmList(defaultDateList, LocalDateTime.of(1983, 1, 19, 23, 59, 50));
+
 
 
 

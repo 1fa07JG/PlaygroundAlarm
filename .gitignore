@@ -1,3 +1,4 @@
 # Project exclude paths
 /target/
 /alarmlistcsv.csv
+/out/artifacts/PlaygroundAlarm_jar/alarmlistcsv.csv

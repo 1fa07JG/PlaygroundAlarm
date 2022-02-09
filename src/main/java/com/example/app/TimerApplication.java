@@ -47,6 +47,7 @@ public class TimerApplication extends Application implements Serializable {
     public static void saveCSV(ArrayList<LocalDateTime> times) throws IOException {
         CSVWriter writer = new CSVWriter(new FileWriter("./alarmlistcsv.csv"));
         String[] dateString = new String[times.size()];
+        times.sort(null);
         for (int i = 0; i < times.size(); i++) {
             dateString[i] = times.get(i).toString();
         }

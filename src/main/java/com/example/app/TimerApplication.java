@@ -16,9 +16,7 @@ import java.util.TimerTask;
 
 public class TimerApplication extends Application implements Serializable {
     public static ArrayList<LocalDateTime> defaultDateList = new ArrayList<>();
-    @Serial
-    public static final long serialVersionUID = 1;
-
+    
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -38,10 +36,6 @@ public class TimerApplication extends Application implements Serializable {
                 Platform.runLater(TimerApplication::showAlert);
             }
         };
-    }
-
-    public static void save(ArrayList<LocalDateTime> times) {
-        serializeObject(times, "./alarmlist.dat");//siehe Speiseplan: findSavePath("dat", "Week")
     }
 
     public static void saveCSV(ArrayList<LocalDateTime> times) throws IOException {
@@ -92,22 +86,6 @@ public class TimerApplication extends Application implements Serializable {
             zahl[i] = Integer.parseInt(zahlText[i]);
         }
         return zahl;
-    }
-
-
-    private static void serializeObject(ArrayList<LocalDateTime> times, String path) {
-
-        FileOutputStream fos;
-        ObjectOutputStream out;
-
-        try {
-            fos = new FileOutputStream(path);
-            out = new ObjectOutputStream(fos);
-            out.writeObject(times);
-            out.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
     }
 
     private static void showAlert() {

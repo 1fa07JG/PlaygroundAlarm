@@ -131,30 +131,36 @@ public class TimerApplication extends Application implements Serializable {
     }
 
 
-
-
     public static void addTime(int hour, int minute, ArrayList<LocalDateTime> times) {
-        //times.add(Helper.giveTimeToday(hour, minute, 0));
+
         addToAlarmList(times, Helper.giveTimeToday(hour, minute, 0));
     }
 
 
-
     public static void main(String[] args) {
 
-        //defaultDateList.add();
+        addAlarmFromTerminal(args);
+
+
         launch();
 
         // wird erst nach dem Schließen der GUI erreicht
     }
 
+    public static void addAlarmFromTerminal(String[] input) {
+        System.out.println("-- Reading alarms from Command Line --");
+        for (String s : input) {
+            String[] timeData = s.split(":");
+            int hour = Integer.parseInt(timeData[0]);
+            int minute = Integer.parseInt(timeData[1]);
+            addTime(hour, minute, defaultDateList);
+            System.out.println("Reading alarm at " + hour + ":" + minute);
+        }
+    }
+
     public static void runTimerDefault() throws IOException {
 
-        addToAlarmList(defaultDateList, LocalDateTime.now().plusSeconds(10));
-        addToAlarmList(defaultDateList, LocalDateTime.now().plusSeconds(15));
-        addToAlarmList(defaultDateList, LocalDateTime.now().plusSeconds(30));
-        addToAlarmList(defaultDateList, Helper.giveTimeToday(16, 20, 0));
-        addToAlarmList(defaultDateList, LocalDateTime.of(1983, 1, 19, 23, 59, 50));
+        //addTestContent();
 
 
 
@@ -172,5 +178,13 @@ public class TimerApplication extends Application implements Serializable {
             Helper.createTimerAtTime(d, createAlertTask());
             // alternativ wären die Timer mit minuten oder Sekundenangabe zu nutzen
         }
+    }
+
+    private static void addTestContent() {
+        addToAlarmList(defaultDateList, LocalDateTime.now().plusSeconds(10));
+        addToAlarmList(defaultDateList, LocalDateTime.now().plusSeconds(15));
+        addToAlarmList(defaultDateList, LocalDateTime.now().plusSeconds(30));
+        addToAlarmList(defaultDateList, Helper.giveTimeToday(16, 20, 0));
+        addToAlarmList(defaultDateList, LocalDateTime.of(1983, 1, 19, 23, 59, 50));
     }
 }

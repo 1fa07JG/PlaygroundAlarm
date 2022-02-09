@@ -39,9 +39,11 @@ public class TimerController {
 
     @FXML
     private void callAddTime(ActionEvent event) {
+        System.out.println("-- Reading alarms from Gui --");
         int hour = Integer.parseInt(newHour.getText());
         int minute = Integer.parseInt(newMinute.getText());
         TimerApplication.addTime(hour, minute, TimerApplication.defaultDateList);
+        System.out.println("Reading alarm at " + hour + ":" + minute);
     }
 
 

@@ -16,15 +16,17 @@ import java.util.TimerTask;
 
 public class TimerApplication extends Application implements Serializable {
     public static ArrayList<LocalDateTime> defaultDateList = new ArrayList<>();
-
+    private static TimerController lord;
 
     @Override
-    public void start(Stage stage) throws IOException {
+    public void start(Stage stage) throws IOException, InterruptedException {
         FXMLLoader fxmlLoader = new FXMLLoader(TimerApplication.class.getResource("timer-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        lord = fxmlLoader.getController();
         stage.setTitle("Timer");
         stage.setScene(scene);
         stage.show();
+        lord.runClock();
     }
 
 

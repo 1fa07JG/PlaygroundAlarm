@@ -47,7 +47,7 @@ public class TimerController {
     }
 
     @FXML
-    private void runClock() throws InterruptedException {
+    public void runClock() throws InterruptedException {
         while (true) {
             writeClockText();
             //Thread.sleep(500);

@@ -114,8 +114,6 @@ public class TimerApplication extends Application implements Serializable {
     }
 
 
-
-
     public static void addTime(int hour, int minute, ArrayList<LocalDateTime> times) {
         times.add(Helper.giveTimeToday(hour, minute, 0));
     }

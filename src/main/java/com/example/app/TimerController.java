@@ -8,9 +8,11 @@ import javafx.scene.control.TextField;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.TimerTask;
 
 public class TimerController {
+
     @FXML
     private Label welcomeText;
     @FXML
@@ -18,6 +20,9 @@ public class TimerController {
 
     @FXML
     private TextField newMinute;
+
+    @FXML
+    private Label TimerList;
 
     @FXML
     protected void onHelloButtonClick() throws IOException {
@@ -38,12 +43,24 @@ public class TimerController {
     }
 
     @FXML
+    public void printAlarmTimes(ArrayList<LocalDateTime> list) {
+        list.sort(null);
+        StringBuilder printFormat = new StringBuilder();
+        for (LocalDateTime l : list) {
+            printFormat.append("Alarm at: ").append(Helper.timeFormatHMS(l)).append("\r");
+        }
+        TimerList.setText(printFormat.toString());
+    }
+
+    @FXML
     private void callAddTime(ActionEvent event) {
         System.out.println("-- Reading alarms from Gui --");
         int hour = Integer.parseInt(newHour.getText());
         int minute = Integer.parseInt(newMinute.getText());
         TimerApplication.addTime(hour, minute, TimerApplication.defaultDateList);
         System.out.println("Reading alarm at " + hour + ":" + minute);
+
+        printAlarmTimes(TimerApplication.defaultDateList);
     }
 
 

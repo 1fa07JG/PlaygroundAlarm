@@ -24,9 +24,11 @@ public class TimerApplication extends Application implements Serializable {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(TimerApplication.class.getResource("timer-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
+        TimerController lord = fxmlLoader.getController();
         stage.setTitle("Timer");
         stage.setScene(scene);
         stage.show();
+        lord.printAlarmTimes(defaultDateList);
     }
 
 
@@ -66,6 +68,7 @@ public class TimerApplication extends Application implements Serializable {
         for (LocalDateTime l : list) {
             if (l.equals(alarmTime)) {
                 exists = true;
+                break;
             }
         }
         return exists;

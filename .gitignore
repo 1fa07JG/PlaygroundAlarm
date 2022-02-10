@@ -2,3 +2,6 @@
 /target/
 /alarmlistcsv.csv
 /out/artifacts/PlaygroundAlarm_jar/alarmlistcsv.csv
+/src/main/resources/com/example/app/hello-view.fxml
+/src/main/java/com/example/app/HelloApplication.java
+/src/main/java/com/example/app/HelloController.java

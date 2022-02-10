@@ -16,7 +16,7 @@ import java.util.TimerTask;
 
 public class TimerApplication extends Application implements Serializable {
     public static ArrayList<LocalDateTime> defaultDateList = new ArrayList<>();
-    
+
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -91,8 +91,6 @@ public class TimerApplication extends Application implements Serializable {
     }
 
 
-
-
     public static void addTime(int hour, int minute, ArrayList<LocalDateTime> times) {
         times.add(Helper.giveTimeToday(hour, minute, 0));
     }
@@ -111,10 +109,6 @@ public class TimerApplication extends Application implements Serializable {
         defaultDateList.add(LocalDateTime.now().plusSeconds(30));
         defaultDateList.add(Helper.giveTimeToday(16, 20, 0));
         defaultDateList.add(LocalDateTime.of(1983, 1, 19, 23, 59, 50));
-
-
-
-
 
 
         saveCSV(defaultDateList);

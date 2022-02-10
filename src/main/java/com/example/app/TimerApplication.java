@@ -137,15 +137,6 @@ public class TimerApplication extends Application implements Serializable {
         defaultDateList.add(Helper.giveTimeToday(16, 20, 0));
         defaultDateList.add(LocalDateTime.of(1983, 1, 19, 23, 59, 50));
 
-
-
-        /*openWindow = new ArrayList<>(Arrays.asList(
-
-                Helper.giveTimeToday(8, 45, 00),
-                Helper.giveTimeToday(9, 35, 00),
-                Helper.giveTimeToday(15, 40, 70)));*/
-
-
         saveCSV(defaultDateList);
 
         for (LocalDateTime d : readCSV("./alarmlistcsv.csv")) {

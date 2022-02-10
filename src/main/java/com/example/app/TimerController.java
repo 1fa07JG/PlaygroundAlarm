@@ -22,7 +22,7 @@ public class TimerController {
     private TextField newMinute;
 
     @FXML
-    private Label TimerList;
+    private ArrayList<Label> TimerList;
 
     @FXML
     protected void onHelloButtonClick() throws IOException {
@@ -48,10 +48,12 @@ public class TimerController {
         StringBuilder printFormat = new StringBuilder();
         for (LocalDateTime l : list) {
             if (l.isAfter(LocalDateTime.now())) {
-                printFormat.append("Alarm at: ").append(Helper.timeFormatHMS(l)).append("\r");
+                Label interactiveLabel = new Label();
+                interactiveLabel.setText(("Alarm at: ") + (Helper.timeFormatHMS(l)));
+                TimerList.add(interactiveLabel);
             }
         }
-        TimerList.setText(printFormat.toString());
+
     }
 
     @FXML

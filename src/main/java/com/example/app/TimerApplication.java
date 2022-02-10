@@ -18,13 +18,14 @@ import java.util.TimerTask;
 public class TimerApplication extends Application implements Serializable {
     public static ArrayList<LocalDateTime> defaultDateList = new ArrayList<>();
     public static final long serialVersionUID = 1;
-
+    private static TimerController lord;
+    //TimerController lord;
 
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(TimerApplication.class.getResource("timer-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        TimerController lord = fxmlLoader.getController();
+        lord = fxmlLoader.getController();
         stage.setTitle("Timer");
         stage.setScene(scene);
         stage.show();
@@ -79,10 +80,6 @@ public class TimerApplication extends Application implements Serializable {
         FileReader filereader = new FileReader(link);
         CSVReader reader = new CSVReader(filereader);
         String[] dateString;
-        //String[] sL= (String[]) dateString.toArray();
-        //String[] nextRecord;
-
-
         // we are going to read data line by line
         while ((dateString = reader.readNext()) != null) {
             for (String cell : dateString) {
@@ -131,6 +128,7 @@ public class TimerApplication extends Application implements Serializable {
         a.initModality(Modality.NONE);
         a.show();
         System.out.println(message);
+        lord.printAlarmTimes(TimerApplication.defaultDateList);
     }
 
 
@@ -164,16 +162,6 @@ public class TimerApplication extends Application implements Serializable {
     public static void runTimerDefault() throws IOException {
 
         //addTestContent();
-
-
-
-
-        /*openWindow = new ArrayList<>(Arrays.asList(
-
-                Helper.giveTimeToday(8, 45, 00),
-                Helper.giveTimeToday(9, 35, 00),
-                Helper.giveTimeToday(15, 40, 70)));*/
-
 
         saveCSV(defaultDateList);
 

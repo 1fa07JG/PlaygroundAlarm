@@ -47,7 +47,9 @@ public class TimerController {
         list.sort(null);
         StringBuilder printFormat = new StringBuilder();
         for (LocalDateTime l : list) {
-            printFormat.append("Alarm at: ").append(Helper.timeFormatHMS(l)).append("\r");
+            if (l.isAfter(LocalDateTime.now())) {
+                printFormat.append("Alarm at: ").append(Helper.timeFormatHMS(l)).append("\r");
+            }
         }
         TimerList.setText(printFormat.toString());
     }

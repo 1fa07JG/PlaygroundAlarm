@@ -1,10 +1,13 @@
 package com.example.app;
 
 import javafx.application.Platform;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -22,7 +25,10 @@ public class TimerController {
     private TextField newMinute;
 
     @FXML
-    private ArrayList<Label> TimerList;
+    private Label timerList;
+
+    @FXML
+    private TableColumn container = new TableColumn("Active Alarms");
 
     @FXML
     protected void onHelloButtonClick() throws IOException {
@@ -44,13 +50,16 @@ public class TimerController {
 
     @FXML
     public void printAlarmTimes(ArrayList<LocalDateTime> list) {
+
         list.sort(null);
         StringBuilder printFormat = new StringBuilder();
         for (LocalDateTime l : list) {
             if (l.isAfter(LocalDateTime.now())) {
-                Label interactiveLabel = new Label();
-                interactiveLabel.setText(("Alarm at: ") + (Helper.timeFormatHMS(l)));
-                TimerList.add(interactiveLabel);
+                container.getCellFactory();
+                Cell c = new Cell();
+                TableCell t = new TableCell();
+                t.setText((("Alarm at: ") + (Helper.timeFormatHMS(l))));
+                container.setCellFactory();
             }
         }
 

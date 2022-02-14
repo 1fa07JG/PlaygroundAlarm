@@ -23,7 +23,6 @@ public class TimerController {
     protected void onHelloButtonClick() throws IOException {
 
         //erweiterung eine Uhr bauen die jede Sekunde auslöst
-
         TimerApplication.runTimerDefault();
     }
 

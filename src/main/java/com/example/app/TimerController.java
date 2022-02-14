@@ -2,10 +2,12 @@ package com.example.app;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -26,7 +28,8 @@ public class TimerController {
     private Label timerList;
 
     @FXML
-    private ListView container = new ListView();
+    private TableView<TimeLocal> cotainer = new TableView();
+
 
     @FXML
     protected void onHelloButtonClick() throws IOException {
@@ -48,11 +51,21 @@ public class TimerController {
 
     @FXML
     public void printAlarmTimes(ArrayList<LocalDateTime> list) {
-
+        TableColumn<TimeLocal, Integer> hourColum = new TableColumn();
+        hourColum.setCellValueFactory(new PropertyValueFactory<TimeLocal, Integer>("firstname"));
+        hourColum.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        hourColum.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<TimeLocal, Integer>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<TimeLocal, Integer> event) {
+                System.out.println("----EditCommit()---- ");
+                event.getRowValue().setHour(event.getNewValue());
+            }
+        });
+        TableColumn<TimeLocal, Integer> minuteColum = new TableColumn();
         list.sort(null);
         for (LocalDateTime l : list) {
             if (l.isAfter(LocalDateTime.now())) {
-                container.getItems().add((("Alarm at: ") + (Helper.timeFormatHMS(l))));
+                
 
             }
         }

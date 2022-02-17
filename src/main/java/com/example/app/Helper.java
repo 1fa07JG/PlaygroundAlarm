@@ -3,6 +3,7 @@ package com.example.app;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -42,18 +43,16 @@ public class Helper {
 
     }
 
-    public static Alarm readCsvAlarm(String[] dateString) {
-        Alarm dateCache = null;
-        for (String cell : dateString) {
-            String[] cells = cell.split("#");
-            LocalDateTime startCache = stringToLocalDateTime(cells[0]);
-            LocalDateTime endCache = stringToLocalDateTime(cells[1]);
-            String memoCache = cells[2];
-            dateCache = new Alarm(startCache, endCache, memoCache);
-
-
+    public static ArrayList<Alarm> parseAlarmTriples(String[] alarmTripleArray) {
+        ArrayList<Alarm> alarmList = new ArrayList<Alarm>();
+        for (String alarmTriple : alarmTripleArray) {
+            String[] alarmParts = alarmTriple.split("#");
+            LocalDateTime startTime = stringToLocalDateTime(alarmParts[0]);
+            LocalDateTime endTime = stringToLocalDateTime(alarmParts[1]);
+            String memo = alarmParts[2];
+            alarmList.add(new Alarm(startTime, endTime, memo));
         }
-        return dateCache;
+        return alarmList;
     }
 
     private static LocalDateTime stringToLocalDateTime(String cell) {

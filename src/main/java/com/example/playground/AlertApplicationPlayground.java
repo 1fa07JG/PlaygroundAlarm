@@ -7,16 +7,11 @@ import javafx.stage.Stage;
 
 public class AlertApplicationPlayground extends Application {
     String message = "Nachricht";
-/*AlertApplication(String text){
-    message=text;
-}*/
+
 
     @Override
     public void start(Stage stage) {
-        Alert a = new Alert(Alert.AlertType.INFORMATION, message);
 
-
-        a.show();
     }
 
 
@@ -24,8 +19,5 @@ public class AlertApplicationPlayground extends Application {
         launch(args);
     }
 
-    public static void show() {
-        launch();
-    }
 
 }

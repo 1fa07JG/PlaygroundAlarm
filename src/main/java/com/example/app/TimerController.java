@@ -32,7 +32,7 @@ public class TimerController {
 
 
     @FXML
-    protected void onHelloButtonClick() throws IOException {
+    protected void startButtonClick() throws IOException {
 
         //erweiterung eine Uhr bauen die jede Sekunde auslöst
 

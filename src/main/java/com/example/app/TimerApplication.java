@@ -43,8 +43,8 @@ public class TimerApplication extends Application implements Serializable {
         };
     }
 
-    public static void saveCSV(ArrayList<Alarm> times) throws IOException {
-        CSVWriter writer = new CSVWriter(new FileWriter("./alarmlistcsv.csv"));
+    public static void saveCSV(ArrayList<Alarm> times, String fileName) throws IOException {
+        CSVWriter writer = new CSVWriter(new FileWriter(fileName));
         String[] dateString = new String[times.size()];
         //times.sort(null);
         //Todo make Alarm sortable
@@ -72,18 +72,22 @@ public class TimerApplication extends Application implements Serializable {
         return exists;
     }
 
-    public static ArrayList<Alarm> readCSV(String link) throws IOException {
+    /**
+     * reads a ArrayList of the type Alarm from a Csv file
+     *
+     * @param fileName
+     * @return
+     * @throws IOException
+     */
+    public static ArrayList<Alarm> readAlarmsFromCsvFile(String fileName) throws IOException {
         ArrayList<Alarm> dateTimeArrayList = new ArrayList<>();
-        FileReader filereader = new FileReader(link);
-        CSVReader reader = new CSVReader(filereader);
-        String[] dateString;
-        //String[] sL= (String[]) dateString.toArray();
-        //String[] nextRecord;
+        FileReader filereader = new FileReader(fileName);
+        CSVReader csvReader = new CSVReader(filereader);
 
-
-        // we are going to read data line by line
-        while ((dateString = reader.readNext()) != null) {
-            dateTimeArrayList.add(Helper.readCsvAlarm(dateString));
+        String[] lineTokens;
+        while ((lineTokens = csvReader.readNext()) != null) {
+            ArrayList<Alarm> alarms = Helper.parseAlarmTriples(lineTokens);
+            dateTimeArrayList.addAll(alarms);
         }
         return dateTimeArrayList;
     }
@@ -147,9 +151,9 @@ public class TimerApplication extends Application implements Serializable {
                 Helper.giveTimeToday(15, 40, 70)));*/
 
 
-        saveCSV(defaultDateList);
+        saveCSV(defaultDateList, "./alarmlistcsv.csv");
 
-        for (Alarm d : readCSV("./alarmlistcsv.csv")) {
+        for (Alarm d : readAlarmsFromCsvFile("./alarmlistcsv.csv")) {
             Helper.createTimerAtTime(d, createAlertTask());
             // alternativ wären die Timer mit minuten oder Sekundenangabe zu nutzen
         }

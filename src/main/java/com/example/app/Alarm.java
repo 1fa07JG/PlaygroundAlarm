@@ -12,11 +12,14 @@ public class Alarm {
     }
 
     public Alarm(LocalDateTime startTime) {
-        this.startTime = startTime;
-        this.endTime = startTime.plusMinutes(5);
-        this.memoText = "";
+        this(startTime, startTime.plusMinutes(5), "");
     }
 
+    public Alarm(LocalDateTime startTime, LocalDateTime endTime, String memoText) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.memoText = memoText;
+    }
 
     public LocalDateTime getStartTime() {
         return startTime;
@@ -42,11 +45,6 @@ public class Alarm {
         this.memoText = memoText;
     }
 
-    public Alarm(LocalDateTime startTime, LocalDateTime endTime, String memoText) {
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.memoText = memoText;
-    }
 
     public String startInHMSFormat() {
         return Helper.timeFormatHMS(startTime);

@@ -27,5 +27,5 @@
     <Label fx:id="timerList"/>
 
     <Label fx:id="welcomeText"/>
-    <Button onAction="#onHelloButtonClick" text="Starte Timer"/>
+    <Button onAction="#startButtonClick" text="Starte Timer"/>
 </VBox>

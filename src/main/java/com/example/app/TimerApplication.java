@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.TimerTask;
 
 public class TimerApplication extends Application implements Serializable {
-    public static ArrayList<LocalDateTime> defaultDateList = new ArrayList<>();
+    public static ArrayList<Alarm> defaultDateList = new ArrayList<>();
     public static final long serialVersionUID = 1;
 
 
@@ -43,31 +43,28 @@ public class TimerApplication extends Application implements Serializable {
         };
     }
 
-    public static void save(ArrayList<LocalDateTime> times) {
-        serializeObject(times, "./alarmlist.dat");//siehe Speiseplan: findSavePath("dat", "Week")
-    }
-
-    public static void saveCSV(ArrayList<LocalDateTime> times) throws IOException {
+    public static void saveCSV(ArrayList<Alarm> times) throws IOException {
         CSVWriter writer = new CSVWriter(new FileWriter("./alarmlistcsv.csv"));
         String[] dateString = new String[times.size()];
-        times.sort(null);
+        //times.sort(null);
+        //Todo make Alarm sortable
         for (int i = 0; i < times.size(); i++) {
-            dateString[i] = times.get(i).toString();
+            dateString[i] = times.get(i).toCsvFormat();
         }
         writer.writeNext(dateString);
         writer.flush();
     }
 
-    public static void addToAlarmList(ArrayList<LocalDateTime> list, LocalDateTime alarmTime) {
+    public static void addToAlarmList(ArrayList<Alarm> list, LocalDateTime alarmTime) {
         if (!isInArrayList(list, alarmTime)) {
-            list.add(alarmTime);
+            list.add(new Alarm(alarmTime));
         }
     }
 
-    public static boolean isInArrayList(ArrayList<LocalDateTime> list, LocalDateTime alarmTime) {
+    public static boolean isInArrayList(ArrayList<Alarm> list, LocalDateTime alarmTime) {
         boolean exists = false;
-        for (LocalDateTime l : list) {
-            if (l.equals(alarmTime)) {
+        for (Alarm l : list) {
+            if (l.getStartTime().equals(alarmTime)) {
                 exists = true;
                 break;
             }
@@ -75,8 +72,8 @@ public class TimerApplication extends Application implements Serializable {
         return exists;
     }
 
-    public static ArrayList<LocalDateTime> readCSV(String link) throws IOException {
-        ArrayList<LocalDateTime> dateTimeArrayList = new ArrayList<>();
+    public static ArrayList<Alarm> readCSV(String link) throws IOException {
+        ArrayList<Alarm> dateTimeArrayList = new ArrayList<>();
         FileReader filereader = new FileReader(link);
         CSVReader reader = new CSVReader(filereader);
         String[] dateString;
@@ -86,18 +83,7 @@ public class TimerApplication extends Application implements Serializable {
 
         // we are going to read data line by line
         while ((dateString = reader.readNext()) != null) {
-            for (String cell : dateString) {
-                String[] cells = cell.split("[-:T.]");
-                int[] dateData = stringArrayToIntArray(cells);
-                LocalDateTime dateCache;
-                if (dateData.length <= 5) {
-                    dateCache = LocalDateTime.of(dateData[0], dateData[1], dateData[2], dateData[3], dateData[4], 0);
-                } else {
-                    dateCache = LocalDateTime.of(dateData[0], dateData[1], dateData[2], dateData[3], dateData[4], dateData[5]);
-                }
-
-                dateTimeArrayList.add(dateCache);
-            }
+            dateTimeArrayList.add(Helper.readCsvAlarm(dateString));
         }
         return dateTimeArrayList;
     }
@@ -111,21 +97,6 @@ public class TimerApplication extends Application implements Serializable {
     }
 
 
-    private static void serializeObject(ArrayList<LocalDateTime> times, String path) {
-
-        FileOutputStream fos;
-        ObjectOutputStream out;
-
-        try {
-            fos = new FileOutputStream(path);
-            out = new ObjectOutputStream(fos);
-            out.writeObject(times);
-            out.close();
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-
     private static void showAlert() {
         String message = "Alarm!!!" + Helper.timeFormatHMS(LocalDateTime.now());
         Alert a = new Alert(Alert.AlertType.INFORMATION, message);
@@ -135,7 +106,7 @@ public class TimerApplication extends Application implements Serializable {
     }
 
 
-    public static void addTime(int hour, int minute, ArrayList<LocalDateTime> times) {
+    public static void addTime(int hour, int minute, ArrayList<Alarm> times) {
 
         addToAlarmList(times, Helper.giveTimeToday(hour, minute, 0));
     }
@@ -178,7 +149,7 @@ public class TimerApplication extends Application implements Serializable {
 
         saveCSV(defaultDateList);
 
-        for (LocalDateTime d : readCSV("./alarmlistcsv.csv")) {
+        for (Alarm d : readCSV("./alarmlistcsv.csv")) {
             Helper.createTimerAtTime(d, createAlertTask());
             // alternativ wären die Timer mit minuten oder Sekundenangabe zu nutzen
         }

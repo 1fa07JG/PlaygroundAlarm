@@ -28,7 +28,7 @@ public class TimerController {
     private Label timerList;
 
     @FXML
-    private TableView<TimeLocal> cotainer = new TableView();
+    private TableView<Alarm> cotainer = new TableView();
 
 
     @FXML
@@ -50,7 +50,7 @@ public class TimerController {
     }
 
     @FXML
-    public void printAlarmTimes(ArrayList<LocalDateTime> list) {
+    public void printAlarmTimes(ArrayList<Alarm> list) {
         TableColumn<TimeLocal, Integer> hourColum = new TableColumn();
         hourColum.setCellValueFactory(new PropertyValueFactory<TimeLocal, Integer>("firstname"));
         hourColum.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
@@ -62,10 +62,11 @@ public class TimerController {
             }
         });
         TableColumn<TimeLocal, Integer> minuteColum = new TableColumn();
-        list.sort(null);
-        for (LocalDateTime l : list) {
-            if (l.isAfter(LocalDateTime.now())) {
-                
+        //list.sort(null);
+        //Todo make Alarm comparable by startTime
+        for (Alarm l : list) {
+            if (l.getStartTime().isAfter(LocalDateTime.now())) {
+
 
             }
         }
@@ -84,4 +85,7 @@ public class TimerController {
     }
 
 
+    public TableView<Alarm> getCotainer() {
+        return cotainer;
+    }
 }

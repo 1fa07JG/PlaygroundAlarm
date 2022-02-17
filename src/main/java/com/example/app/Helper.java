@@ -14,14 +14,14 @@ public class Helper {
     }
 
     public static void createTimerAfterSeconds(int seconds, TimerTask task) {
-        LocalDateTime alarmTime = LocalDateTime.now().plusSeconds(seconds);
+        Alarm alarmTime = new Alarm(LocalDateTime.now().plusSeconds(seconds));
         createTimerAtTime(alarmTime, task);
     }
 
 
-    public static void createTimerAtTime(LocalDateTime alarmTime, TimerTask task) {
-        if (alarmTime.isAfter(LocalDateTime.now())) {
-            System.out.println("createTimerAtTime() Alarm um " + timeFormatHMS(alarmTime));
+    public static void createTimerAtTime(Alarm alarmTime, TimerTask task) {
+        if (alarmTime.startTime.isAfter(LocalDateTime.now())) {
+            System.out.println("createTimerAtTime() Alarm um " + alarmTime.startInHMSFormat());
             Timer freeze = new Timer();
             freeze.schedule(task, localDateToDate(alarmTime));
         }
@@ -36,10 +36,37 @@ public class Helper {
         };
     }
 
-    public static Date localDateToDate(LocalDateTime local) {
-        Instant instant = local.atZone(ZoneId.of("Europe/Berlin")).toInstant();
+    public static Date localDateToDate(Alarm local) {
+        Instant instant = local.getStartTime().atZone(ZoneId.of("Europe/Berlin")).toInstant();
         return Date.from(instant);
 
+    }
+
+    public static Alarm readCsvAlarm(String[] dateString) {
+        Alarm dateCache = null;
+        for (String cell : dateString) {
+            String[] cells = cell.split("#");
+            LocalDateTime startCache = stringToLocalDateTime(cells[0]);
+            LocalDateTime endCache = stringToLocalDateTime(cells[1]);
+            String memoCache = cells[2];
+            dateCache = new Alarm(startCache, endCache, memoCache);
+
+
+        }
+        return dateCache;
+    }
+
+    private static LocalDateTime stringToLocalDateTime(String cell) {
+        LocalDateTime dateCache;
+        String[] cells = cell.split("[-:T.]");
+        int[] dateData = TimerApplication.stringArrayToIntArray(cells);
+
+        if (dateData.length <= 5) {
+            dateCache = LocalDateTime.of(dateData[0], dateData[1], dateData[2], dateData[3], dateData[4], 0);
+        } else {
+            dateCache = LocalDateTime.of(dateData[0], dateData[1], dateData[2], dateData[3], dateData[4], dateData[5]);
+        }
+        return dateCache;
     }
 
     public static LocalDateTime giveTimeToday(int hour, int minute, int second) {

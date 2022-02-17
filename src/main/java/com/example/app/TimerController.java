@@ -1,17 +1,23 @@
 package com.example.app;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.converter.FormatStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.FieldPosition;
+import java.text.ParsePosition;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.TimerTask;
 
 public class TimerController {
@@ -28,7 +34,7 @@ public class TimerController {
     private Label timerList;
 
     @FXML
-    private TableView<Alarm> cotainer = new TableView();
+    private TableView<Alarm> cotainer;
 
 
     @FXML
@@ -38,6 +44,60 @@ public class TimerController {
 
         TimerApplication.runTimerDefault();
     }
+
+    public void initialize() throws IOException {
+        cotainer.setEditable(true);
+        ObservableList<TableColumn<Alarm, ?>> columns = cotainer.getColumns();
+        TableColumn<Alarm, String> startTimeColum = (TableColumn<Alarm, String>) columns.get(0);
+        startTimeColum.setText("Start Time");
+        startTimeColum.setCellValueFactory(new PropertyValueFactory<Alarm, String>("startTimeString"));
+        startTimeColum.setCellFactory(TextFieldTableCell.forTableColumn());
+        startTimeColum.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Alarm, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Alarm, String> event) {
+                System.out.println("----EditCommit()---- ");
+                String AlarmTimeInHMFormat = event.getNewValue();
+                String[] hourAndMinute = AlarmTimeInHMFormat.split(":");
+                LocalDateTime startTime = event.getRowValue().getStartTime();
+                startTime = startTime.withHour(Integer.parseInt(hourAndMinute[0]));
+                startTime = startTime.withMinute(Integer.parseInt(hourAndMinute[1]));
+                event.getRowValue().setStartTime(startTime);
+            }
+        });
+        TableColumn<Alarm, String> endTimeColum = (TableColumn<Alarm, String>) columns.get(1);
+        endTimeColum.setText("End Time");
+        endTimeColum.setCellValueFactory(new PropertyValueFactory<Alarm, String>("endTimeString"));
+        endTimeColum.setCellFactory(TextFieldTableCell.forTableColumn());
+        endTimeColum.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Alarm, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Alarm, String> event) {
+                System.out.println("----EditCommit()---- ");
+                String AlarmTimeInHMFormat = event.getNewValue();
+                String[] hourAndMinute = AlarmTimeInHMFormat.split(":");
+                LocalDateTime endTime = event.getRowValue().getStartTime();
+                endTime = endTime.withHour(Integer.parseInt(hourAndMinute[0]));
+                endTime = endTime.withMinute(Integer.parseInt(hourAndMinute[1]));
+                event.getRowValue().setStartTime(endTime);
+            }
+        });
+
+        TableColumn<Alarm, String> memoColum = (TableColumn<Alarm, String>) columns.get(2);
+        memoColum.setText("Notiz");
+        memoColum.setCellValueFactory(new PropertyValueFactory<Alarm, String>("memoText"));
+        memoColum.setCellFactory(TextFieldTableCell.forTableColumn());
+        memoColum.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Alarm, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Alarm, String> editEvent) {
+                System.out.println("----EditCommit()----");
+                editEvent.getRowValue().setMemoText(editEvent.getNewValue());
+            }
+        });
+
+        cotainer.getItems().addAll(TimerApplication.readAlarmsFromCsvFile("./alarmlistcsv.csv"));
+
+
+    }
+
 
     public TimerTask createGuiTask() {
         return new TimerTask() {
@@ -51,26 +111,41 @@ public class TimerController {
 
     @FXML
     public void printAlarmTimes(ArrayList<Alarm> list) {
-        TableColumn<TimeLocal, Integer> hourColum = new TableColumn();
-        hourColum.setCellValueFactory(new PropertyValueFactory<TimeLocal, Integer>("firstname"));
-        hourColum.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        hourColum.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<TimeLocal, Integer>>() {
+        TableColumn<Alarm, String> startTimeColum = new TableColumn();
+        startTimeColum.setCellValueFactory(new PropertyValueFactory<Alarm, String>("starTime"));
+        startTimeColum.setCellFactory(TextFieldTableCell.forTableColumn());
+        startTimeColum.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Alarm, String>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<TimeLocal, Integer> event) {
+            public void handle(TableColumn.CellEditEvent<Alarm, String> event) {
                 System.out.println("----EditCommit()---- ");
-                event.getRowValue().setHour(event.getNewValue());
+                String AlarmTimeInHMFormat = event.getNewValue();
+                String[] hourAndMinute = AlarmTimeInHMFormat.split(":");
+                LocalDateTime startTime = event.getRowValue().getStartTime();
+                startTime = startTime.withHour(Integer.parseInt(hourAndMinute[0]));
+                startTime = startTime.withMinute(Integer.parseInt(hourAndMinute[1]));
+                event.getRowValue().setStartTime(startTime);
             }
         });
-        TableColumn<TimeLocal, Integer> minuteColum = new TableColumn();
-        //list.sort(null);
-        //Todo make Alarm comparable by startTime
-        for (Alarm l : list) {
-            if (l.getStartTime().isAfter(LocalDateTime.now())) {
-
-
+        TableColumn<Alarm, String> endTimeColum = new TableColumn();
+        endTimeColum.setCellValueFactory(new PropertyValueFactory<Alarm, String>("starTime"));
+        endTimeColum.setCellFactory(TextFieldTableCell.forTableColumn());
+        endTimeColum.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Alarm, String>>() {
+            @Override
+            public void handle(TableColumn.CellEditEvent<Alarm, String> event) {
+                System.out.println("----EditCommit()---- ");
+                String AlarmTimeInHMFormat = event.getNewValue();
+                String[] hourAndMinute = AlarmTimeInHMFormat.split(":");
+                LocalDateTime endTime = event.getRowValue().getStartTime();
+                endTime = endTime.withHour(Integer.parseInt(hourAndMinute[0]));
+                endTime = endTime.withMinute(Integer.parseInt(hourAndMinute[1]));
+                event.getRowValue().setStartTime(endTime);
             }
-        }
+        });
+        cotainer.getColumns().add(startTimeColum);
+        cotainer.getColumns().add(endTimeColum);
 
+
+        System.out.println("add colum");
     }
 
     @FXML
@@ -81,7 +156,7 @@ public class TimerController {
         TimerApplication.addTime(hour, minute, TimerApplication.defaultDateList);
         System.out.println("Reading alarm at " + hour + ":" + minute);
 
-        printAlarmTimes(TimerApplication.defaultDateList);
+        //printAlarmTimes(TimerApplication.defaultDateList);
     }
 
 

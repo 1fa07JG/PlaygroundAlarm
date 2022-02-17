@@ -28,8 +28,7 @@ public class TimerApplication extends Application implements Serializable {
         stage.setTitle("Timer");
         stage.setScene(scene);
         stage.show();
-        lord.printAlarmTimes(defaultDateList);
-        lord.getCotainer();
+        //lord.printAlarmTimes(defaultDateList);
     }
 
 
